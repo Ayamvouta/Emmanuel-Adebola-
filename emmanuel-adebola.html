@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emmanuel Adebola — Web Developer & Designer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red:    #FF3B3B;
+      --blue:   #1A6BFF;
+      --yellow: #FFD600;
+      --green:  #00C48C;
+      --orange: #FF7A00;
+      --pink:   #FF4FA3;
+      --white:  #FFFFFF;
+      --off:    #FAFAFA;
+      --ink:    #111111;
+      --soft:   #555555;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--white); color: var(--ink); font-family: 'Nunito', sans-serif; overflow-x: hidden; cursor: none; }
+
+    .cursor { position: fixed; width: 14px; height: 14px; background: var(--red); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .15s, height .15s; mix-blend-mode: multiply; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 5vw; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-bottom: 3px solid transparent; transition: border-color .3s; }
+    nav.scrolled { border-bottom-color: var(--ink); }
+    .nav-logo { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: var(--ink); text-decoration: none; }
+    .nav-logo span { color: var(--red); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-weight: 700; font-size: .9rem; color: var(--ink); text-decoration: none; position: relative; padding-bottom: 2px; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 3px; background: var(--yellow); transition: width .25s; border-radius: 2px; }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 10rem 5vw 5rem; position: relative; overflow: hidden; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .16; pointer-events: none; }
+    .blob-1 { width: 520px; height: 520px; background: var(--blue); top: -130px; right: -60px; animation: d1 8s ease-in-out infinite; }
+    .blob-2 { width: 380px; height: 380px; background: var(--yellow); bottom: 40px; left: -80px; animation: d2 10s ease-in-out infinite; }
+    .blob-3 { width: 260px; height: 260px; background: var(--red); top: 42%; right: 18%; animation: d1 12s ease-in-out infinite reverse; }
+    @keyframes d1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(28px,-28px); } }
+    @keyframes d2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-22px,24px); } }
+
+    .hero-eyebrow { font-family: 'Caveat', cursive; font-size: 1.6rem; color: var(--blue); margin-bottom: .8rem; opacity:0; animation: su .7s .2s forwards; }
+    .hero-name { font-family: 'Fredoka One', cursive; font-size: clamp(4rem, 10vw, 9rem); line-height: .95; margin-bottom: 1.5rem; opacity:0; animation: su .7s .4s forwards; }
+    .hero-name .hl { color: var(--red); display: inline-block; position: relative; }
+    .hero-name .hl::after { content:''; position:absolute; bottom:8px; left:0; right:0; height:14px; background:var(--yellow); z-index:-1; transform:rotate(-1.2deg); border-radius:4px; }
+    .hero-sub { font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 600; color: var(--soft); max-width: 540px; line-height: 1.8; margin-bottom: 3rem; opacity:0; animation: su .7s .6s forwards; }
+    .hero-sub strong { color: var(--blue); }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; opacity:0; animation: su .7s .8s forwards; }
+    .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .85rem 2rem; font-family: 'Nunito', sans-serif; font-size: .95rem; font-weight: 800; border-radius: 50px; text-decoration: none; border: 3px solid var(--ink); transition: transform .2s, box-shadow .2s; box-shadow: 4px 4px 0 var(--ink); }
+    .btn:hover { transform: translate(-3px,-3px); box-shadow: 7px 7px 0 var(--ink); }
+    .btn-red { background: var(--red); color: #fff; }
+    .btn-wht { background: var(--white); color: var(--ink); }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 4rem; opacity:0; animation: su .7s 1s forwards; }
+    .htag { font-weight: 800; font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; padding: .4rem 1rem; border-radius: 50px; border: 2.5px solid var(--ink); }
+    .tr { background:var(--red); color:#fff; }
+    .tb { background:var(--blue); color:#fff; }
+    .ty { background:var(--yellow); color:var(--ink); }
+    .tg { background:var(--green); color:#fff; }
+    .to { background:var(--orange); color:#fff; }
+    .tp { background:var(--pink); color:#fff; }
+    .scroll-hint { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:.3rem; font-family:'Caveat', cursive; font-size:1rem; color:var(--soft); animation: bounce 2s ease-in-out infinite; }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(8px);} }
+
+    .wave { display:block; width:100%; overflow:hidden; line-height:0; }
+    .wave svg { display:block; }
+
+    section { padding: 6rem 5vw; }
+    .section-label { font-family:'Caveat', cursive; font-size:1.4rem; color:var(--blue); margin-bottom:.4rem; }
+    .section-title { font-family:'Fredoka One', cursive; font-size:clamp(2.4rem,5vw,4rem); line-height:1.1; margin-bottom:1.5rem; }
+    .accent  { color:var(--red); }
+    .accent2 { color:var(--blue); }
+
+    /* ABOUT */
+    .about-section { background: var(--off); }
+    .about-layout { display:grid; grid-template-columns:1.1fr 1fr; gap:6rem; align-items:center; }
+    .about-text { font-size:1.1rem; font-weight:500; color:#333; line-height:1.9; margin-bottom:1.4rem; }
+    .about-text em { font-style:normal; color:var(--red); font-weight:800; }
+    .about-text b  { color:var(--blue); }
+    .about-visual { position:relative; display:flex; justify-content:center; align-items:center; }
+    .big-ea { font-family:'Fredoka One', cursive; font-size:13rem; color:var(--yellow); -webkit-text-stroke:4px var(--ink); line-height:1; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; white-space:nowrap; }
+    .about-stats { position:relative; z-index:2; display:flex; flex-direction:column; gap:2rem; }
+    .stat-row { display:flex; align-items:center; gap:1.2rem; }
+    .stat-n { font-family:'Fredoka One', cursive; font-size:3.5rem; line-height:1; min-width:4rem; }
+    .stat-d { font-weight:700; font-size:1rem; color:var(--soft); line-height:1.4; }
+
+    /* SKILLS */
+    .skills-section { background:var(--white); }
+    .skills-flow { display:flex; flex-wrap:wrap; gap:1.1rem; margin-top:2rem; }
+    .skill-pill { display:flex; align-items:center; gap:.7rem; padding:.8rem 1.8rem; border-radius:50px; border:3px solid var(--ink); font-weight:800; font-size:.95rem; box-shadow:4px 4px 0 var(--ink); transition:transform .2s, box-shadow .2s; }
+    .skill-pill:hover { transform:translate(-3px,-3px); box-shadow:7px 7px 0 var(--ink); }
+    .dot { width:10px; height:10px; border-radius:50%; }
+    .sp1 { background:#FFF0F0; } .sp2 { background:#F0F5FF; } .sp3 { background:#FFFDE6; }
+    .sp4 { background:#F0FFF8; } .sp5 { background:#FFF5ED; } .sp6 { background:#FFF0F8; }
+
+    /* SERVICES */
+    .services-section { background:var(--ink); color:#fff; }
+    .services-section .section-label { color:var(--yellow); }
+    .service-row { display:flex; align-items:center; gap:2rem; padding:2.2rem 1rem; border-bottom:2px solid #222; border-radius:12px; transition:background .2s; cursor:default; }
+    .service-row:first-child { border-top:2px solid #222; }
+    .service-row:hover { background:#1b1b1b; }
+    .service-row:hover .arr { transform:translateX(5px) rotate(-45deg); color:var(--yellow); }
+    .sr-num { font-family:'Fredoka One', cursive; font-size:1.1rem; color:#444; min-width:2.5rem; }
+    .sr-ico { font-size:2rem; min-width:2.8rem; text-align:center; }
+    .sr-body { flex:1; }
+    .sr-title { font-family:'Fredoka One', cursive; font-size:1.6rem; margin-bottom:.3rem; }
+    .sr-desc { font-size:.92rem; color:#888; font-weight:500; line-height:1.6; }
+    .sr-tag { font-weight:800; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; padding:.3rem .9rem; border-radius:50px; color:var(--ink); }
+    .arr { font-size:1.4rem; transition:transform .2s, color .2s; color:#444; }
+
+    /* TOOLS */
+    .tools-section { background:var(--yellow); }
+    .tools-section .section-label { color:#7a6600; }
+    .tools-wrap { display:flex; flex-wrap:wrap; gap:.85rem; margin-top:2rem; }
+    .tool-item { font-weight:700; font-size:.9rem; padding:.6rem 1.4rem; background:var(--white); border:3px solid var(--ink); border-radius:8px; box-shadow:3px 3px 0 var(--ink); transition:transform .15s, box-shadow .15s; }
+    .tool-item:hover { transform:translate(-2px,-2px); box-shadow:5px 5px 0 var(--ink); }
+
+    /* EXPERIENCE */
+    .exp-section { background:var(--white); }
+    .exp-list { margin-top:3rem; }
+    .exp-row { display:grid; grid-template-columns:160px 1fr; gap:3rem; padding:3rem 0; border-bottom:2px dashed #eee; position:relative; }
+    .exp-row:last-child { border-bottom:none; }
+    .exp-year-col { text-align:right; }
+    .exp-year { font-family:'Fredoka One', cursive; font-size:1rem; color:var(--soft); line-height:1.4; }
+    .exp-dot { display:inline-block; width:14px; height:14px; border-radius:50%; border:3px solid var(--ink); position:absolute; left:160px; top:3.8rem; transform:translateX(-50%); }
+    .exp-line { position:absolute; left:160px; top:3.8rem; bottom:-2px; width:3px; background:#eee; transform:translateX(-50%); }
+    .exp-row:last-child .exp-line { display:none; }
+    .exp-role { font-family:'Fredoka One', cursive; font-size:1.8rem; margin-bottom:.5rem; }
+    .exp-desc { font-size:1rem; color:var(--soft); font-weight:500; line-height:1.75; }
+
+    /* CONTACT */
+    .contact-section { background:var(--blue); color:#fff; }
+    .contact-section .section-label { color:var(--yellow); }
+    .contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+    .contact-big { font-family:'Fredoka One', cursive; font-size:clamp(3rem,6vw,5.5rem); line-height:1; margin-bottom:1.5rem; }
+    .contact-big .yell { color:var(--yellow); }
+    .contact-info { font-size:1rem; font-weight:600; line-height:2; color:rgba(255,255,255,.8); }
+    .contact-info a { color:var(--yellow); text-decoration:none; }
+    .contact-info a:hover { text-decoration:underline; }
+    .cf-field { width:100%; padding:1rem 1.3rem; font-family:'Nunito', sans-serif; font-size:1rem; font-weight:600; border:3px solid rgba(255,255,255,.35); border-radius:12px; background:rgba(255,255,255,.1); color:#fff; outline:none; transition:border-color .2s, background .2s; resize:none; margin-bottom:1rem; display:block; }
+    .cf-field:focus { border-color:var(--yellow); background:rgba(255,255,255,.15); }
+    .cf-field::placeholder { color:rgba(255,255,255,.4); }
+    .btn-send { background:var(--yellow); color:var(--ink); border-color:var(--ink); }
+    .form-success { display:none; font-family:'Caveat', cursive; font-size:1.5rem; color:var(--yellow); margin-top:1rem; }
+
+    footer { background:var(--ink); padding:2.5rem 5vw; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    .footer-logo { font-family:'Fredoka One', cursive; font-size:1.4rem; color:var(--white); }
+    .footer-logo span { color:var(--yellow); }
+    .footer-copy { font-size:.85rem; font-weight:600; color:#666; }
+
+    .reveal { opacity:0; transform:translateY(36px); transition:opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    @keyframes su { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:translateY(0);} }
+
+    /* ── HAMBURGER ── */
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:6px; background:none; border:none; z-index:600; }
+    .hamburger span { display:block; width:26px; height:3px; background:var(--ink); border-radius:3px; transition:transform .3s, opacity .3s; }
+    .hamburger.open span:nth-child(1) { transform:translateY(8px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity:0; }
+    .hamburger.open span:nth-child(3) { transform:translateY(-8px) rotate(-45deg); }
+
+    /* mobile nav drawer */
+    .nav-drawer { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:var(--white); z-index:550; flex-direction:column; justify-content:center; align-items:center; gap:2.5rem; }
+    .nav-drawer.open { display:flex; }
+    .nav-drawer a { font-family:'Fredoka One', cursive; font-size:2.2rem; color:var(--ink); text-decoration:none; transition:color .2s; }
+    .nav-drawer a:hover { color:var(--red); }
+    .nav-drawer-close { position:absolute; top:1.5rem; right:1.5rem; font-size:2rem; background:none; border:none; cursor:pointer; color:var(--ink); }
+
+    /* ── TABLET (max 900px) ── */
+    @media(max-width:900px){
+      body { cursor:auto; }
+      .cursor { display:none; }
+
+      nav { padding:1rem 5vw; }
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+
+      section { padding:4rem 5vw; }
+
+      /* HERO */
+      .hero { padding:8rem 5vw 4rem; min-height:100svh; }
+      .hero-name { font-size:clamp(3.2rem,12vw,6rem); }
+      .hero-sub { font-size:1rem; margin-bottom:2rem; }
+      .hero-cta { gap:.8rem; }
+      .btn { padding:.75rem 1.6rem; font-size:.9rem; }
+      .hero-tags { margin-top:2.5rem; gap:.5rem; }
+      .htag { font-size:.7rem; padding:.35rem .85rem; }
+      .scroll-hint { display:none; }
+
+      /* ABOUT */
+      .about-layout { grid-template-columns:1fr; gap:2.5rem; }
+      .about-visual { display:none; }
+      .about-text { font-size:1rem; }
+
+      /* SKILLS */
+      .skill-pill { font-size:.85rem; padding:.65rem 1.3rem; }
+
+      /* SERVICES */
+      .service-row { gap:1rem; padding:1.6rem .5rem; flex-wrap:wrap; }
+      .sr-num { display:none; }
+      .sr-ico { font-size:1.6rem; min-width:2rem; }
+      .sr-title { font-size:1.3rem; }
+      .sr-tag { display:none; }
+      .arr { display:none; }
+
+      /* TOOLS */
+      .tool-item { font-size:.82rem; padding:.5rem 1.1rem; }
+
+      /* EXPERIENCE */
+      .exp-row { grid-template-columns:1fr; gap:.3rem; padding:2rem 0; }
+      .exp-year-col { text-align:left; }
+      .exp-dot,.exp-line { display:none; }
+      .exp-role { font-size:1.5rem; }
+
+      /* CONTACT */
+      .contact-layout { grid-template-columns:1fr; gap:2.5rem; }
+      .contact-big { font-size:clamp(2.4rem,8vw,3.5rem); }
+      .btn-send { width:100%; justify-content:center; }
+
+      footer { flex-direction:column; text-align:center; padding:2rem 5vw; gap:.6rem; }
+    }
+
+    /* ── SMALL PHONES (max 480px) ── */
+    @media(max-width:480px){
+      nav { padding:.9rem 4vw; }
+      .nav-logo { font-size:1.3rem; }
+
+      .hero { padding:7rem 4vw 3.5rem; }
+      .hero-eyebrow { font-size:1.3rem; }
+      .hero-name { font-size:clamp(2.8rem,13vw,5rem); line-height:1; }
+      .hero-name .hl::after { height:10px; bottom:5px; }
+      .hero-sub { font-size:.95rem; max-width:100%; }
+      .hero-cta { flex-direction:column; align-items:flex-start; }
+      .btn { width:100%; justify-content:center; padding:.85rem 1.4rem; }
+      .hero-tags { gap:.4rem; }
+      .htag { font-size:.65rem; padding:.3rem .75rem; }
+
+      section { padding:3.5rem 4vw; }
+      .section-title { font-size:clamp(2rem,8vw,2.8rem); }
+      .section-label { font-size:1.2rem; }
+
+      .about-text { font-size:.97rem; line-height:1.8; }
+
+      .skills-flow { gap:.7rem; }
+      .skill-pill { font-size:.8rem; padding:.55rem 1.1rem; box-shadow:3px 3px 0 var(--ink); }
+
+      .service-row { padding:1.4rem .3rem; gap:.8rem; }
+      .sr-ico { font-size:1.5rem; }
+      .sr-title { font-size:1.2rem; }
+      .sr-desc { font-size:.85rem; }
+
+      .tools-wrap { gap:.6rem; }
+      .tool-item { font-size:.78rem; padding:.45rem .9rem; box-shadow:2px 2px 0 var(--ink); }
+
+      .exp-role { font-size:1.3rem; }
+      .exp-desc { font-size:.92rem; }
+
+      .contact-big { font-size:clamp(2rem,9vw,3rem); }
+      .contact-info { font-size:.92rem; }
+      .cf-field { font-size:.95rem; padding:.85rem 1rem; }
+
+      .footer-logo { font-size:1.2rem; }
+      .footer-copy { font-size:.78rem; }
+
+      .nav-drawer a { font-size:1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">Emmanu<span>el</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Let's Talk</a></li>
+  </ul>
+  <button class="hamburger" id="hbg" aria-label="Open menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-drawer" id="drawer">
+  <button class="nav-drawer-close" id="drawerClose">✕</button>
+  <a href="#about" onclick="closeDrawer()">About</a>
+  <a href="#services" onclick="closeDrawer()">Services</a>
+  <a href="#experience" onclick="closeDrawer()">Experience</a>
+  <a href="#contact" onclick="closeDrawer()">Let's Talk</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <p class="hero-eyebrow">✦ Hey there, I'm</p>
+  <h1 class="hero-name">Emmanuel<br><span class="hl">Adebola.</span></h1>
+  <p class="hero-sub"><strong>Web Developer · Web Designer · Graphic Designer</strong> based in Nigeria.<br>I build bold, beautiful websites &amp; digital experiences people actually love.</p>
+  <div class="hero-cta">
+    <a href="#services" class="btn btn-red">See My Services ↓</a>
+    <a href="#contact" class="btn btn-wht">Say Hello 👋</a>
+  </div>
+  <div class="hero-tags">
+    <span class="htag tr">HTML &amp; CSS</span>
+    <span class="htag tb">JavaScript</span>
+    <span class="htag ty">WordPress</span>
+    <span class="htag tg">Web Design</span>
+    <span class="htag to">Graphic Design</span>
+    <span class="htag tp">AI Tools</span>
+  </div>
+  <div class="scroll-hint">scroll down<span>↓</span></div>
+</section>
+
+<div class="wave"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#FAFAFA"/></svg></div>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-layout">
+    <div class="reveal">
+      <p class="section-label">// A little about me</p>
+      <h2 class="section-title">Turning Ideas Into <span class="accent">Beautiful</span> Digital Things</h2>
+      <p class="about-text">I'm <em>Emmanuel Adebola</em> — a web developer, designer, and visual creator who genuinely loves what he does. With <b>3+ years of hands-on experience</b> in coding and WordPress, I've spent my time figuring out what makes websites not just work, but truly <em>shine</em>.</p>
+      <p class="about-text">I'm also <b>deeply integrated with AI tools</b> — Google Workspace, Claude, ChatGPT, and more — which means I work faster, smarter, and deliver more value without cutting corners.</p>
+      <p class="about-text">Whether it's a landing page, a full business site, a logo, or a social media kit — I bring <em>creativity, precision, and real energy</em> to every single project.</p>
+      <a href="#contact" class="btn btn-red" style="margin-top:1.5rem;display:inline-flex;">Work With Me →</a>
+    </div>
+    <div class="about-visual reveal">
+      <div class="big-ea">EA</div>
+      <div class="about-stats">
+        <div class="stat-row"><div class="stat-n" style="color:var(--red)">3+</div><div class="stat-d">Years of coding<br>&amp; building websites</div></div>
+        <div class="stat-row"><div class="stat-n" style="color:var(--blue)">3+</div><div class="stat-d">Years of WordPress<br>expertise</div></div>
+        <div class="stat-row"><div class="stat-n" style="color:var(--green)">∞</div><div class="stat-d">Passion for creating<br>great digital work</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave" style="background:#FAFAFA"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0 C480,80 960,0 1440,60 L1440,80 L0,80 Z" fill="#fff"/></svg></div>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="reveal">
+    <p class="section-label">// My skill set</p>
+    <h2 class="section-title">What I'm <span class="accent2">Great</span> At</h2>
+    <p style="font-size:1.1rem;font-weight:500;color:var(--soft);max-width:520px;line-height:1.8;margin-bottom:.5rem">Tools, languages, and disciplines I've genuinely mastered over the years.</p>
+  </div>
+  <div class="skills-flow reveal">
+    <div class="skill-pill sp1"><div class="dot" style="background:var(--red)"></div>HTML5</div>
+    <div class="skill-pill sp2"><div class="dot" style="background:var(--blue)"></div>CSS3</div>
+    <div class="skill-pill sp3"><div class="dot" style="background:var(--yellow)"></div>JavaScript</div>
+    <div class="skill-pill sp4"><div class="dot" style="background:var(--green)"></div>WordPress</div>
+    <div class="skill-pill sp5"><div class="dot" style="background:var(--orange)"></div>Web Design / UI</div>
+    <div class="skill-pill sp6"><div class="dot" style="background:var(--pink)"></div>Graphic Design</div>
+    <div class="skill-pill sp1"><div class="dot" style="background:var(--red)"></div>Responsive Design</div>
+    <div class="skill-pill sp2"><div class="dot" style="background:var(--blue)"></div>Google Tools</div>
+    <div class="skill-pill sp3"><div class="dot" style="background:var(--yellow)"></div>AI-Powered Workflows</div>
+    <div class="skill-pill sp4"><div class="dot" style="background:var(--green)"></div>Brand Identity</div>
+    <div class="skill-pill sp5"><div class="dot" style="background:var(--orange)"></div>Site Optimisation</div>
+    <div class="skill-pill sp6"><div class="dot" style="background:var(--pink)"></div>Content Layout</div>
+  </div>
+</section>
+
+<div class="wave"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,60 C480,0 960,80 1440,20 L1440,80 L0,80 Z" fill="#111"/></svg></div>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="reveal">
+    <p class="section-label">// What I offer</p>
+    <h2 class="section-title">Services That <span style="color:var(--yellow)">Deliver</span></h2>
+    <p style="font-size:1rem;font-weight:500;color:#888;max-width:500px;line-height:1.8;margin-bottom:1.5rem">From a fresh website to a full brand kit — here's exactly how I can help your business online.</p>
+  </div>
+  <div class="reveal">
+    <div class="service-row"><div class="sr-num">01</div><div class="sr-ico">🌐</div><div class="sr-body"><div class="sr-title">Web Development</div><div class="sr-desc">Hand-coded, responsive websites using HTML, CSS &amp; JavaScript. Clean, fast, and built the right way.</div></div><span class="sr-tag" style="background:var(--red);color:#fff">Core</span><span class="arr">→</span></div>
+    <div class="service-row"><div class="sr-num">02</div><div class="sr-ico">🎨</div><div class="sr-body"><div class="sr-title">Web &amp; UI Design</div><div class="sr-desc">Interfaces that are intuitive, visually stunning, and genuinely enjoyable to use.</div></div><span class="sr-tag" style="background:var(--blue);color:#fff">Design</span><span class="arr">→</span></div>
+    <div class="service-row"><div class="sr-num">03</div><div class="sr-ico">⚡</div><div class="sr-body"><div class="sr-title">WordPress Builds</div><div class="sr-desc">Full WordPress websites — themes, plugins, custom layouts, and ongoing support. 3+ years deep.</div></div><span class="sr-tag" style="background:var(--yellow);color:var(--ink)">Popular</span><span class="arr">→</span></div>
+    <div class="service-row"><div class="sr-num">04</div><div class="sr-ico">✏️</div><div class="sr-body"><div class="sr-title">Graphic Design</div><div class="sr-desc">Logos, brand kits, flyers, social media graphics — everything that makes your brand look polished.</div></div><span class="sr-tag" style="background:var(--green);color:#fff">Visual</span><span class="arr">→</span></div>
+    <div class="service-row"><div class="sr-num">05</div><div class="sr-ico">🤖</div><div class="sr-body"><div class="sr-title">AI-Assisted Solutions</div><div class="sr-desc">I use modern AI tools to supercharge delivery times and solve complex problems with creative efficiency.</div></div><span class="sr-tag" style="background:var(--orange);color:#fff">New</span><span class="arr">→</span></div>
+    <div class="service-row"><div class="sr-num">06</div><div class="sr-ico">🔍</div><div class="sr-body"><div class="sr-title">Site Audits &amp; Maintenance</div><div class="sr-desc">Performance reviews, bug fixes, SEO basics, and ongoing care to keep your site at its best.</div></div><span class="sr-tag" style="background:var(--pink);color:#fff">Support</span><span class="arr">→</span></div>
+  </div>
+</section>
+
+<div class="wave" style="background:#111"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,20 C360,80 1080,0 1440,50 L1440,80 L0,80 Z" fill="#FFD600"/></svg></div>
+
+<!-- TOOLS -->
+<section class="tools-section" id="tools">
+  <div class="reveal">
+    <p class="section-label">// My toolkit</p>
+    <h2 class="section-title" style="color:var(--ink)">Tools I Work With <span style="font-family:'Caveat',cursive;color:#7a6600;font-size:2.5rem;font-weight:500">Every Day</span></h2>
+    <div class="tools-wrap">
+      <div class="tool-item">HTML5</div><div class="tool-item">CSS3</div><div class="tool-item">JavaScript</div>
+      <div class="tool-item">WordPress</div><div class="tool-item">Elementor</div><div class="tool-item">Figma</div>
+      <div class="tool-item">Adobe Photoshop</div><div class="tool-item">Canva</div><div class="tool-item">Google Workspace</div>
+      <div class="tool-item">ChatGPT</div><div class="tool-item">Claude AI</div><div class="tool-item">GitHub</div>
+      <div class="tool-item">VS Code</div><div class="tool-item">Google Analytics</div>
+    </div>
+  </div>
+</section>
+
+<div class="wave" style="background:#FFD600"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,50 C480,10 960,70 1440,30 L1440,80 L0,80 Z" fill="#fff"/></svg></div>
+
+<!-- EXPERIENCE -->
+<section class="exp-section" id="experience">
+  <div class="reveal">
+    <p class="section-label">// My journey</p>
+    <h2 class="section-title">How I Got <span class="accent">Here</span></h2>
+  </div>
+  <div class="exp-list reveal">
+    <div class="exp-row">
+      <div class="exp-year-col"><div class="exp-year">2022 — Now</div></div>
+      <div class="exp-line"></div><div class="exp-dot" style="background:var(--red)"></div>
+      <div><div class="exp-role">Freelance Web Developer</div><p class="exp-desc">Building custom websites and front-end solutions for clients across different industries. HTML, CSS, JavaScript — coded with care every single time.</p></div>
+    </div>
+    <div class="exp-row">
+      <div class="exp-year-col"><div class="exp-year">2022 — Now</div></div>
+      <div class="exp-line"></div><div class="exp-dot" style="background:var(--blue)"></div>
+      <div><div class="exp-role">WordPress Specialist</div><p class="exp-desc">3+ years developing, customising, and maintaining WordPress websites — from simple portfolios to full business sites with complex functionality.</p></div>
+    </div>
+    <div class="exp-row">
+      <div class="exp-year-col"><div class="exp-year">2022 — Now</div></div>
+      <div class="exp-line"></div><div class="exp-dot" style="background:var(--green)"></div>
+      <div><div class="exp-role">Graphic Designer</div><p class="exp-desc">Creating visual identities, social media content, flyers, and brand assets that give businesses a professional, consistent look and feel.</p></div>
+    </div>
+    <div class="exp-row">
+      <div class="exp-year-col"><div class="exp-year">Ongoing</div></div>
+      <div class="exp-dot" style="background:var(--orange)"></div>
+      <div><div class="exp-role">AI Tools Practitioner</div><p class="exp-desc">Actively integrating AI-powered tools into every workflow — from development automation to creative assistance — staying at the leading edge of what's possible.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wave"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,30 C360,80 1080,0 1440,55 L1440,80 L0,80 Z" fill="#1A6BFF"/></svg></div>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-layout">
+    <div class="reveal">
+      <p class="section-label">// Get in touch</p>
+      <h2 class="contact-big">Let's Build<br>Something <span class="yell">Amazing.</span></h2>
+      <p class="contact-info">Open to freelance, collabs &amp; long-term projects.<br><br>
+        📧 <a href="mailto:emmanueladebola@email.com">emmanueladebola@email.com</a><br>
+        🌍 Based in Nigeria<br>
+        💬 Always happy to chat!
+      </p>
+    </div>
+    <div class="reveal">
+      <input class="cf-field" type="text" id="cn" placeholder="Your Name"/>
+      <input class="cf-field" type="email" id="ce" placeholder="Your Email"/>
+      <textarea class="cf-field" id="cm" rows="5" placeholder="Tell me about your project..."></textarea>
+      <button class="btn btn-send" onclick="sendMsg()" style="border:3px solid var(--ink);cursor:none;">Send Message →</button>
+      <p class="form-success" id="fs">✦ Got it! I'll be in touch soon 🎉</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Emmanu<span>el</span> Adebola</div>
+  <p class="footer-copy">© 2025 · Designed &amp; built by Emmanuel Adebola</p>
+</footer>
+
+<script>
+  // Cursor (desktop only)
+  const cur = document.getElementById('cur');
+  const isMobile = () => window.matchMedia('(max-width:900px)').matches;
+  document.addEventListener('mousemove', e => {
+    if(isMobile()) return;
+    cur.style.left = e.clientX+'px'; cur.style.top = e.clientY+'px';
+  });
+  document.querySelectorAll('a,button,.service-row,.skill-pill,.tool-item').forEach(el => {
+    el.addEventListener('mouseenter', () => { if(!isMobile()){cur.style.width='22px';cur.style.height='22px';} });
+    el.addEventListener('mouseleave', () => { if(!isMobile()){cur.style.width='14px';cur.style.height='14px';} });
+  });
+
+  // Hamburger menu
+  const hbg = document.getElementById('hbg');
+  const drawer = document.getElementById('drawer');
+  const drawerClose = document.getElementById('drawerClose');
+  function openDrawer()  { drawer.classList.add('open');  hbg.classList.add('open');  document.body.style.overflow='hidden'; }
+  function closeDrawer() { drawer.classList.remove('open'); hbg.classList.remove('open'); document.body.style.overflow=''; }
+  hbg.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
+  drawerClose.addEventListener('click', closeDrawer);
+
+  window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 50));
+  const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  function sendMsg() {
+    if(!document.getElementById('cn').value||!document.getElementById('ce').value||!document.getElementById('cm').value) return;
+    ['cn','ce','cm'].forEach(id => document.getElementById(id).value='');
+    document.getElementById('fs').style.display='block';
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => { const t=document.querySelector(a.getAttribute('href')); if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});} });
+  });
+</script>
+</body>
+</html>
